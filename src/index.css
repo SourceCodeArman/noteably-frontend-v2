@@ -3,13 +3,46 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
+  --color-background: #020617;
+  --color-foreground: #e2e8f0;
+  --color-surface: #0f172a;
+  --color-surface-muted: #111f33;
+  --color-border: #1e293b;
+  --color-muted: #0b1628;
+  --color-muted-foreground: #94a3b8;
+  --color-primary: #38bdf8;
+  --color-primary-foreground: #04101c;
+  --color-success: #22c55e;
+  --color-success-foreground: #052e16;
+  --color-warning: #fbbf24;
+  --color-warning-foreground: #2b1700;
+  --color-danger: #f87171;
+  --color-danger-foreground: #450a0a;
+  --color-info: #60a5fa;
+  --color-info-foreground: #0b1220;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
 }
 
-body {
-  @apply bg-slate-950 text-slate-50 antialiased;
-}
+@layer base {
+  * {
+    @apply border-border; 
+  }
 
-a {
-  @apply text-slate-100 transition-colors hover:text-slate-300;
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  a {
+    @apply text-primary transition-colors hover:text-primary/80;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    @apply font-sans;
+  }
 }
