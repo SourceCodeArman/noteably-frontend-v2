@@ -49,6 +49,14 @@ src/
 └── styles/
 ```
 
+## Design System
+
+This project includes a comprehensive design system with Tailwind tokens for colors, typography, spacing, and more. Dark mode is supported out of the box.
+
+- **Full Documentation**: [docs/DESIGN_SYSTEM.md](./docs/DESIGN_SYSTEM.md)
+- **Quick Start Guide**: [docs/DESIGN_SYSTEM_QUICK_START.md](./docs/DESIGN_SYSTEM_QUICK_START.md)
+- **Dark Mode Hook**: `useDarkMode()` in `src/hooks/useDarkMode.ts`
+
 ## Routing
 
 This application uses React Router v7 for client-side routing. See [docs/ROUTING.md](./docs/ROUTING.md) for detailed routing documentation.

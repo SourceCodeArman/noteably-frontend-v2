@@ -10,7 +10,7 @@ const Dashboard = lazy(() => import('@/routes/Dashboard'))
 function LoadingFallback() {
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="text-xl text-slate-400">Loading...</div>
+      <div className="text-xl text-muted">Loading...</div>
     </div>
   )
 }
