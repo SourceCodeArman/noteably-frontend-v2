@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 import useAuth from '@/hooks/useAuth'
 
 interface PublicRouteProps {
@@ -7,10 +7,24 @@ interface PublicRouteProps {
 }
 
 function PublicRoute({ children }: PublicRouteProps) {
-  const { isAuthenticated } = useAuth()
+  const location = useLocation()
+  const { isAuthenticated, isLoading } = useAuth()
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-16">
+        <div className="text-slate-400">Loading...</div>
+      </div>
+    )
+  }
 
   if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />
+    const redirectPath = (
+      (location.state as { from?: { pathname: string } } | null)?.from?.pathname ||
+      '/dashboard'
+    )
+
+    return <Navigate to={redirectPath} replace />
   }
 
   return <>{children}</>

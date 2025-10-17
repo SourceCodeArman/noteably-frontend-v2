@@ -11,4 +11,7 @@ function useAuth(): AuthContextValue {
   return context
 }
 
+export type { AuthContextValue } from '@/contexts/auth-context'
+export type { User, AuthState } from '@/types/auth'
+
 export default useAuth
