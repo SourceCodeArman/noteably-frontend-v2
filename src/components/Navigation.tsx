@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import useAuth from '@/hooks/useAuth'
 
 function Navigation() {
   const navigate = useNavigate()
-  const { isAuthenticated, logout } = useAuth()
+  const { isAuthenticated, logout, user } = useAuth()
+  const [isSigningOut, setIsSigningOut] = useState(false)
 
   const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
     `px-4 py-2 rounded-lg transition-colors ${
@@ -12,9 +14,27 @@ function Navigation() {
         : 'text-slate-300 hover:text-white hover:bg-slate-800'
     }`
 
-  const handleLogout = () => {
-    logout()
-    navigate('/')
+  const handleLogout = async () => {
+    if (isSigningOut) {
+      return
+    }
+
+    setIsSigningOut(true)
+
+    let didLogout = false
+
+    try {
+      await logout()
+      didLogout = true
+    } catch (_error) {
+      didLogout = false
+    } finally {
+      setIsSigningOut(false)
+    }
+
+    if (didLogout) {
+      navigate('/')
+    }
   }
 
   return (
@@ -45,14 +65,26 @@ function Navigation() {
               )}
             </div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2">
             {isAuthenticated ? (
-              <button
-                onClick={handleLogout}
-                className="px-4 py-2 text-slate-300 hover:text-white transition-colors"
-              >
-                Logout
-              </button>
+              <>
+                {user?.name && (
+                  <span className="hidden md:inline text-sm text-slate-400">
+                    {user.name}
+                  </span>
+                )}
+                <button
+                  onClick={handleLogout}
+                  disabled={isSigningOut}
+                  className={`px-4 py-2 text-slate-300 transition-colors ${
+                    isSigningOut
+                      ? 'opacity-60 cursor-not-allowed'
+                      : 'hover:text-white'
+                  }`}
+                >
+                  {isSigningOut ? 'Logging out...' : 'Logout'}
+                </button>
+              </>
             ) : (
               <>
                 <NavLink
